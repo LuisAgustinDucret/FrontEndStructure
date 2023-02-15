@@ -1,23 +1,22 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase qrs that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
 import { getFirestore } from "@firebase/firestore";
+import { FIREBASE_CONFIG } from '../constants/config';
+import { getAuth } from 'firebase/auth';
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAlqp12YUUbMm-6d88vabK9CxmhP1UpynQ",
-  authDomain: "qr-maker-da5dd.firebaseapp.com",
-  projectId: "qr-maker-da5dd",
-  storageBucket: "qr-maker-da5dd.appspot.com",
-  messagingSenderId: "621223040306",
-  appId: "1:621223040306:web:79c053d689f2f607b4f32b",
-};
+
+try {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    console.log('Firebase inicializado');
+  }
+} catch (err) {
+  console.log(err);
+}
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const firebaseApp = initializeApp(firebaseConfig);
+const app = initializeApp(FIREBASE_CONFIG);
+const firebaseApp = initializeApp(FIREBASE_CONFIG);
 
 export const db = getFirestore(app);
+export const auth = getAuth(firebaseApp);
 export default firebaseApp;

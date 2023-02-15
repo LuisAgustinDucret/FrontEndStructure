@@ -1,2 +1,2 @@
 export * from './qrs';
-export * from './firebase'
+export * from './auth';
