@@ -1,4 +1,6 @@
-import { AUTH_ERRORS } from "../constants";
+import { AUTH_ERRORS } from "../constants/firebase-error";
+
+AUTH_ERRORS
 
 export const getMessageError = (messageCode) => {
   const currentError = AUTH_ERRORS.find(({ code }) => {

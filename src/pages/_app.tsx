@@ -8,6 +8,7 @@ import { AppProps } from "next/app";
 
 import createStore from "../store";
 import { PersistGate } from "redux-persist/integration/react";
+import { AuthProvider } from "@/services";
 
 const { store, persistor } = createStore();
 
@@ -20,7 +21,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       <PersistGate persistor={persistor}>
         <GlobalStyles theme={theme} />
         <ThemeProvider theme={theme}>
+        <AuthProvider>
           <Component {...pageProps}/>
+          </AuthProvider>
         </ThemeProvider>
       </PersistGate>
     </Provider>

@@ -18,6 +18,8 @@ import { getKeys, mapPropertiesToColumns } from "../../utils";
 import { suscribeQrs, setModalVisibility } from "../../store/actions/";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
+import Spinner from "../../components/Spinner";
+
 
 //import CalendarMonthIcon  from "@mui/icons-material/CalendarMonthIcon";
 //import ArrowLeftIcon  from "@mui/icons-material/ArrowLeftIcon";
@@ -35,6 +37,10 @@ const TestLayout = () => {
 
   const router = useRouter();
   const dispatch = useDispatch();
+
+
+
+
 
   const {
     qrs,
@@ -180,6 +186,8 @@ const TestLayout = () => {
   const renderModalContent = useCallback(() => {
     return (
       <>
+
+
         <TextField
           name="evento"
           label="Evento"

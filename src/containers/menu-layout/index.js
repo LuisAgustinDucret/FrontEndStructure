@@ -5,15 +5,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { collapseDrawer, changeTheme } from "../../store/actions/config.action";
 import { Container } from "./styles";
 import MenuDrawer from "../../components/MenuDrawer";
+import { logout } from "../../services";
+import { useAuth } from "../../services";
+
 
 const MenuLayout = () => {
     const theme = useTheme();
     const router = useRouter();
     const dispatch = useDispatch();
+    const { currentUser } = useAuth();
   
     const isShowing = useSelector((state) => !state.config.drawerCollapse);
     const darkMode = useSelector((state) => state.config.darkMode);
   
+    const handleLogout = async () => {
+      try {
+        await logout();
+      } catch (error) {
+        console.log('Error al cerrar sesión:', error);
+      }
+    };
 
 
     const goToCategorias = () => {
@@ -28,10 +39,11 @@ const MenuLayout = () => {
       dispatch(collapseDrawer(true));
       router.push("/GrupoFamiliar");
     };
-  
+
     return (
       <Container theme={theme}>
         <MenuDrawer
+        username={currentUser.email}
           isShowing={isShowing}
           onClose={() => {
             dispatch(collapseDrawer(true));
@@ -40,10 +52,11 @@ const MenuLayout = () => {
           changeThemeMode={() => {
             dispatch(changeTheme());
           }}
-          onLogout={() => {}}
+            onLogout={handleLogout}
           redirectCategorias={goToCategorias}
           redirectSocios={goToSocios}
           redirectGrupoFamiliar={goToGrupoFamiliar}
+
         />
       </Container>
     );

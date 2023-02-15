@@ -19,8 +19,10 @@ import {
   isEmailError,
   isPasswordError,
 } from "../../utils/authHelper";
+import { useRouter } from 'next/router';
 
 const LoginLayout = ({ navigateToHome }) => {
+  const router = useRouter();
   const theme = useTheme();
   const strings = locale();
   const [email, setEmail] = useState("");
@@ -29,16 +31,14 @@ const LoginLayout = ({ navigateToHome }) => {
   const [error, setError] = useState(null);
 
   const handleLogin = () => {
-    /*login(email, password)
+    login(email, password)
       .then((response) => {
         console.log("responseCont", response);
-        navigateToHome();
       })
       .catch((err) => {
         console.log("errorCont", err);
         setError({ code: err.code, message: err.message });
-      });*/
-      navigateToHome();
+      });
   };
 
   const handleInputChange = ({ target }) => {

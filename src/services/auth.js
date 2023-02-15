@@ -1,10 +1,13 @@
 import { auth } from './firebase';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged  } from "firebase/auth";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import Spinner from "../components/Spinner"
 
 // eslint-disable-next-line import/prefer-default-export
 export const login = async (email, password) => {
   let [response, error] = [null, null];
   try {
-    response = await auth.signInWithEmailAndPassword(email, password);
+    response = await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
     throw err;
   }
@@ -16,4 +19,42 @@ export const login = async (email, password) => {
 };
 
 export const currentUser = () => auth.currentUser;
- 
+
+export const logout = () => {
+  signOut(auth)
+    .then(() => {
+    })
+    .catch((error) => {
+      // An error happened.
+      console.log('Error al cerrar sesión:', error);
+    });
+};
+
+
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [authPending, setAuthPending] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setAuthPending(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  if (authPending) {
+    return <Spinner />
+  }
+
+  return (
+    <AuthContext.Provider value={{ currentUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
