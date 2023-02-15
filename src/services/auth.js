@@ -35,20 +35,14 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [authPending, setAuthPending] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      setAuthPending(false);
     });
 
     return unsubscribe;
   }, []);
-
-  if (authPending) {
-    return <Spinner />
-  }
 
   return (
     <AuthContext.Provider value={{ currentUser }}>
